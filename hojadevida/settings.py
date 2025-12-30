@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+load_dotenv()
+
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,7 +30,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #SECRET_KEY = 'django-insecure-tfn_-#+!)0h=s6sf5zoj7z2#6sg3^mmd368h7g@w3tqk0%2x^3'
 SECRET_KEY=os.environ.get('SECRET_KEY',default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = 'RENDER' not in os.environ
+#DEBUG = 'RENDER' not in os.environ
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 
 #VERSION ANTERIOR COMENTADA
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'paginasusuario',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -88,10 +96,22 @@ WSGI_APPLICATION = 'hojadevida.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+#ESTA BASE DE DATOS ES LA BUENA
+#-------------------------------------------------------------------------------
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default='external url',
+#         conn_max_age=600
+#     )
+# }
+#---------------------------------------------------------------------------------
+
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:1234@127.0.0.1:5432/basededatos',
-        conn_max_age=600
+        #default='external url',
+        default = os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
@@ -139,5 +159,33 @@ STATICFILES_DIRS = [
     BASE_DIR / 'paginasusuario' / 'static',
 ]
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+# AZURE_ACCOUNT_NAME = 'davidcertificados'
+# AZURE_ACCOUNT_KEY = 'clave'
+# AZURE_CONTAINER = 'certificados'
+
+# AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+
+# AZURE_LOCATION = ''
+# AZURE_OVERWRITE_FILES = False
+
+# MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/"
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+AZURE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
+AZURE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = os.environ.get('AZURE_CONTAINER')
+
+AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/"
+
+#print("DB_URL =", os.getenv("DATABASE_URL"))
+

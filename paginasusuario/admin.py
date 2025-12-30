@@ -8,6 +8,9 @@ from .models import (
     VentaGarage,
     Certificado
 )
+from django.conf import settings
+import os
+
 
 # ==========================
 # DATOS PERSONALES
@@ -110,10 +113,60 @@ class VentaGarageAdmin(admin.ModelAdmin):
 # ==========================
 # CERTIFICADOS
 # ==========================
-from .models import Certificado
+#from .models import Certificado
+
+#-------------------------------------------------------------------------
+# @admin.register(Certificado)
+# class CertificadoAdmin(admin.ModelAdmin):
+#     list_display = ("nombre", "perfil", "fecha", "activar_front")
+#     list_filter = ("activar_front",)
+#----------------------------------------------------------------------------
+
+# @admin.register(Certificado)
+# class CertificadoAdmin(admin.ModelAdmin):
+#     list_display = ('nombre', 'perfil', 'activar_front')
+
+
+# @admin.register(Certificado)
+# class CertificadoAdmin(admin.ModelAdmin):
+#     list_display = ('nombre', 'perfil', 'activar_front')
+
 
 @admin.register(Certificado)
 class CertificadoAdmin(admin.ModelAdmin):
-    list_display = ("nombre", "perfil", "fecha", "activar_front")
-    list_filter = ("activar_front",)
+    list_display = ('nombre', 'perfil', 'activar_front')
 
+    def save_model(self, request, obj, form, change):
+        archivo = form.cleaned_data.get('archivo')
+
+        if archivo:
+            from azure.storage.blob import BlobServiceClient
+            import os
+            from django.conf import settings
+
+            blob_service_client = BlobServiceClient(
+                account_url=f"https://{settings.AZURE_ACCOUNT_NAME}.blob.core.windows.net",
+                credential=settings.AZURE_ACCOUNT_KEY
+            )
+
+            nombre_blob = os.path.basename(archivo.name)
+
+            blob_client = blob_service_client.get_blob_client(
+                container=settings.AZURE_CONTAINER,
+                blob=nombre_blob
+            )
+
+            archivo.seek(0)
+            blob_client.upload_blob(
+                archivo,
+                overwrite=True,
+                content_type="application/pdf"
+            )
+
+            # 🔑 GUARDAMOS SOLO LA URL
+            obj.archivo_url = blob_client.url
+
+            # 🔥 ESTO ES LO CRÍTICO
+            obj.archivo = None
+
+        super().save_model(request, obj, form, change)

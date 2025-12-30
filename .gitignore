@@ -1,6 +1,5 @@
 # Entorno virtual (Usa el nombre de tu carpeta, venv o env)
 venv/
-
 # Base de datos local
 db.sqlite3
 
@@ -15,3 +14,5 @@ _pycache_/
 # Estáticos y Media (Muy importante para Render)
 staticfiles/
 media/
+
+.env/

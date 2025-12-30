@@ -17,6 +17,52 @@
 #nuevo 1
 
 
+# from django.shortcuts import render
+# from .models import (
+#     DatosPersonales,
+#     ExperienciaLaboral,
+#     CursosRealizados,
+#     Reconocimientos,
+#     Certificado
+# )
+
+# def index(request):
+#     perfil = DatosPersonales.objects.first()
+
+#     experiencias = ExperienciaLaboral.objects.filter(
+#         perfil=perfil,
+#         activar_front=True
+#     )
+
+#     cursos = CursosRealizados.objects.filter(
+#         perfil=perfil,
+#         activar_front=True
+#     )
+
+#     reconocimientos = Reconocimientos.objects.filter(
+#         perfil=perfil,
+#         activar_front=True
+#     )
+    
+#     certificados = Certificado.objects.filter(
+#     perfil=perfil,
+#     activar_front=True
+#     )
+
+
+#     context = {
+#         'perfil': perfil,
+#         'experiencias': experiencias,
+#         'cursos': cursos,
+#         'reconocimientos': reconocimientos,
+#         'certificados': certificados
+#     }
+
+#     return render(request, 'paginasusuario/index.html', context)
+
+
+#NUEVO 2: 
+
 from django.shortcuts import render
 from .models import (
     DatosPersonales,
@@ -43,12 +89,11 @@ def index(request):
         perfil=perfil,
         activar_front=True
     )
-    
-    certificados = Certificado.objects.filter(
-    perfil=perfil,
-    activar_front=True
-    )
 
+    certificados = Certificado.objects.filter(
+        perfil=perfil,
+        activar_front=True
+    )
 
     context = {
         'perfil': perfil,
@@ -59,3 +104,4 @@ def index(request):
     }
 
     return render(request, 'paginasusuario/index.html', context)
+

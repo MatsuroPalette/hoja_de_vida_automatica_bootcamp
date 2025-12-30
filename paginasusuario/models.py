@@ -82,6 +82,93 @@ class VentaGarage(models.Model):
     activar_front = models.BooleanField(default=True)
     
 #7. Certificados (vamos a ver si funciona)
+#--------------------------------------------------------------
+# class Certificado(models.Model):
+#     perfil = models.ForeignKey(
+#         DatosPersonales,
+#         on_delete=models.CASCADE,
+#         related_name="certificados"
+#     )
+#     nombre = models.CharField(max_length=100)
+#     ruta_archivo = models.CharField(max_length=255)
+#     # ruta_archivo = models.CharField(max_length=255, null=True, blank=True)
+
+#     fecha = models.DateField(null=True, blank=True)
+#     activar_front = models.BooleanField(default=True)
+
+#     def __str__(self):
+#         return self.nombre
+#-------------------------------------------------------------------
+#7. Certificados (el anterior funcionaba. Vamos a ver si este igual.)
+# class Certificado(models.Model):
+#     perfil = models.ForeignKey(
+#         DatosPersonales,
+#         on_delete=models.CASCADE,
+#         related_name="certificados"
+#     )
+#     nombre = models.CharField(max_length=100)
+#     archivo = models.FileField(
+#         upload_to='certificados/',  # Se guardarán los PDFs en MEDIA_ROOT/certificados/
+#         max_length=255,
+#         null=True,  # Permite que filas antiguas tengan el campo vacío
+#         blank=True
+#     )
+#     fecha = models.DateField(null=True, blank=True)
+#     activar_front = models.BooleanField(default=True)
+
+#     def __str__(self):
+#         return self.nombre
+
+
+#7. Certificados (por favor funciona)
+# class Certificado(models.Model):
+#     perfil = models.ForeignKey(
+#         DatosPersonales,
+#         on_delete=models.CASCADE,
+#         related_name="certificados"
+#     )
+#     nombre = models.CharField(max_length=100)
+#     archivo = models.FileField(upload_to='')
+#     fecha = models.DateField(null=True, blank=True)
+#     activar_front = models.BooleanField(default=True)
+
+#     def __str__(self):
+#         return self.nombre
+    
+#7. Certificados (ayuda por favor)
+# class Certificado(models.Model):
+#     perfil = models.ForeignKey(
+#         DatosPersonales,
+#         on_delete=models.CASCADE,
+#         related_name="certificados"
+#     )
+#     nombre = models.CharField(max_length=100)
+
+#     archivo = models.FileField(upload_to='', blank=True, null=True)
+#     archivo_url = models.URLField(blank=True, null=True)
+
+#     fecha = models.DateField(null=True, blank=True)
+#     activar_front = models.BooleanField(default=True)
+
+#     def __str__(self):
+#         return self.nombre
+
+# #7. Certificados (Ayudeme alguien pls)
+# class Certificado(models.Model):
+#     perfil = models.ForeignKey(
+#         DatosPersonales,
+#         on_delete=models.CASCADE,
+#         related_name="certificados"
+#     )
+#     nombre = models.CharField(max_length=100)
+#     archivo = models.FileField(upload_to='')
+#     fecha = models.DateField(null=True, blank=True)
+#     activar_front = models.BooleanField(default=True)
+
+#     def __str__(self):
+#         return self.nombre
+
+#7. CERTIFICADOS
 class Certificado(models.Model):
     perfil = models.ForeignKey(
         DatosPersonales,
@@ -89,10 +176,13 @@ class Certificado(models.Model):
         related_name="certificados"
     )
     nombre = models.CharField(max_length=100)
-    ruta_archivo = models.CharField(max_length=255)
+
+    #  NO FileField
+    archivo = models.FileField(upload_to='', blank=True, null=True)  # solo para el admin form
+    archivo_url = models.URLField(blank=True, null=True)
+
     fecha = models.DateField(null=True, blank=True)
     activar_front = models.BooleanField(default=True)
 
     def __str__(self):
         return self.nombre
-

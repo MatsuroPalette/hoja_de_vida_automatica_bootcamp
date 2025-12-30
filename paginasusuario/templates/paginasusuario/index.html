@@ -282,9 +282,13 @@
 
 
 
-{% comment %} nuevo 2: {% endcomment %}
 
+{% comment %} =========================================================================================================== {% endcomment %}
 
+{% comment %} ================================================================================== {% endcomment %}
+{% comment %} nuevo 2(EL BUENO, EL FUNCIONAL, EL QUE SIRVE): {% endcomment %}
+
+{% comment %} BORRAR ESTE COMMENT
 <!DOCTYPE html>
 {% load static %}
 <html lang="es">
@@ -409,7 +413,9 @@
                         {% comment %} {% if cert.fecha %}
                             <span class="muted">({{ cert.fecha }})</span>
                         {% endif %} {% endcomment %}
-                    </li>
+                        
+                        {% comment %} BORRAR EL COMMENT. ESTE ES EL ULTIMO. SOLO SON DOS {% endcomment %}
+                    {% comment %} </li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -429,7 +435,162 @@
 <script src="{% static 'paginasusuario/js/main.js' %}"></script>
 
 </body>
+</html>  {% endcomment %}
+
+
+{% comment %} =========================================================================================================== {% endcomment %}
+{% comment %} =========================================================================================================== {% endcomment %}
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ perfil.nombres }} | Portafolio</title>
+    <link rel="stylesheet" href="{% static 'paginasusuario/css/styles.css' %}">
+</head>
+
+<body>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+    <nav class="nav">
+        <span class="logo">{{ perfil.nombres }}</span>
+        <ul class="nav-links">
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#experiencia">Experiencia</a></li>
+            <li><a href="#cursos">Cursos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+            <a href="#certificados" id="ver-certificados">Certificados</a>
+        </ul>
+    </nav>
+
+    <div class="hero-content">
+        <h1>Hola, soy {{ perfil.nombres }}</h1>
+        <p>{{ perfil.descripcion_perfil }}</p>
+    </div>
+</header>
+
+<main>
+
+<!-- ================= SOBRE MI ================= -->
+<section id="sobre-mi" class="section">
+    <h2>Sobre mí</h2>
+    <p>{{ perfil.nacionalidad }} · {{ perfil.lugar_nacimiento }}</p>
+    <p>Nacido el {{ perfil.fecha_nacimiento }}</p>
+</section>
+
+<!-- ================= EXPERIENCIA ================= -->
+<section id="experiencia" class="section highlight">
+    <h2>Experiencia laboral</h2>
+
+    <div class="proyectos-grid">
+        {% for exp in experiencias %}
+        <article class="card">
+            <h3>{{ exp.cargo_desempenado }}</h3>
+            <p><strong>{{ exp.nombre_empresa }}</strong></p>
+            <p>{{ exp.descripcion_funciones }}</p>
+            <p>
+                {{ exp.fecha_inicio }} —
+                {% if exp.fecha_fin %}
+                    {{ exp.fecha_fin }}
+                {% else %}
+                    Actualidad
+                {% endif %}
+            </p>
+        </article>
+        {% empty %}
+        <p>No hay experiencia laboral registrada.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================= CURSOS ================= -->
+<section id="cursos" class="section">
+    <h2>Cursos realizados</h2>
+
+    <div class="proyectos-grid">
+        {% for curso in cursos %}
+        <article class="card">
+            <h3>{{ curso.nombre_curso }}</h3>
+            <p>{{ curso.entidad_patrocinadora }}</p>
+            <p>{{ curso.total_horas }} horas</p>
+        </article>
+        {% empty %}
+        <p>No hay cursos registrados.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section id="contacto" class="section cierre">
+    <h2>Contacto</h2>
+
+    <p>
+        GitHub:
+        {% if perfil.sitio_web %}
+            <a href="{{ perfil.sitio_web }}" target="_blank">{{ perfil.sitio_web }}</a>
+        {% else %}
+            No disponible
+        {% endif %}
+    </p>
+
+    <p>
+        Teléfono: {{ perfil.telefono_convencional|default:"No disponible" }}
+    </p>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 · {{ perfil.nombres }} — Hecho con código y paciencia</p>
+</footer>
+
+<!-- ================= MODAL CERTIFICADOS ================= -->
+<section id="certificados" class="section highlight certificados oculto">
+    <h2>Certificados</h2>
+
+    {% if certificados %}
+        <ul class="cert-list">
+            {% for cert in certificados %}
+                <li>
+                    <a href="{{ cert.archivo_url }}" target="_blank">
+                        {{ cert.nombre }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="muted">No hay certificados disponibles.</p>
+    {% endif %}
+
+    <button id="cerrar-certificados" class="btn-cerrar">
+        Cerrar certificados
+    </button>
+</section>
+
+<!-- ================= JS ================= -->
+<script src="{% static 'paginasusuario/js/main.js' %}"></script>
+
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
