@@ -26,10 +26,21 @@ SECRET_KEY=os.environ.get('SECRET_KEY',default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = []
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL')
+
+#VERSION ANTERIOR COMENTADA
+#-----------------------------------------------------------------
+# ALLOWED_HOSTS = []
+# RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL')
+# if RENDER_EXTERNAL_HOSTNAME:
+# 	ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+#------------------------------------------------------------------
+ALLOWED_HOSTS = ['localhost', '127.0.0.1'] # Para que siga funcionando en tu PC
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME') # Ojo: Render usa 'RENDER_EXTERNAL_HOSTNAME'
 if RENDER_EXTERNAL_HOSTNAME:
-	ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    # También es bueno agregar el dominio base si el anterior falla
+    ALLOWED_HOSTS.append('.onrender.com')
+
 
 # Application definition
 
