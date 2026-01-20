@@ -189,3 +189,7 @@ MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/"
 
 #print("DB_URL =", os.getenv("DATABASE_URL"))
 
+
+
+STATIC_URL = '/static/'
+
