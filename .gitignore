@@ -1,0 +1,40 @@
+# # Entorno virtual (Usa el nombre de tu carpeta, venv o env)
+# venv/
+# # Base de datos local
+# db.sqlite3
+
+# # Archivos de sistema y editores
+# .vscode/
+# .DS_Store
+
+# # Python
+# _pycache_/
+# *.pyc
+
+# # Estáticos y Media (Muy importante para Render)
+# staticfiles/
+# media/
+
+# .env
+
+# --- Entorno virtual ---
+venv/
+env/
+
+# --- Base de datos local ---
+db.sqlite3
+
+# --- Archivos de sistema y editores ---
+.vscode/
+.DS_Store
+
+# --- Python (IMPORTANTE: Corrección de nombre) ---
+_pycache_/
+*.pyc
+
+# --- Estáticos y Media (Para Render/Deploy) ---
+staticfiles/
+media/
+
+# --- Seguridad ---
+.env
